@@ -354,6 +354,9 @@ Auto-detects CMake vs. plain Make/Ninja/Meson per project (`§9`/root detection)
 | `<leader>ps` | Restore session for cwd |
 | `<leader>pl` | Restore last session |
 | `<leader>pd` | Don't save this session on exit |
+| `<leader>ud` | Night theme (gruvbox dark) |
+| `<leader>ul` | Day theme (gruvbox light) |
+| `<leader>ut` | Toggle day/night theme |
 | `<leader>bo` / `<leader>br` | Toggle / run generic build task panel (overseer) |
 | `gnn` / `grn` / `grm` | Treesitter incremental selection: init / expand / shrink |
 | `af`/`if`, `ac`/`ic`, `aa`/`ia` | Treesitter textobjects: function, class, parameter |
@@ -385,7 +388,7 @@ Auto-detects CMake vs. plain Make/Ninja/Meson per project (`§9`/root detection)
 | `nvim-lualine/lualine.nvim` | Statusline |
 | `folke/which-key.nvim` | Keymap hints |
 | `folke/persistence.nvim` | Session save/restore |
-| `catppuccin/nvim` | Colorscheme (with integrations for every plugin above) |
+| `ellisonleao/gruvbox.nvim` | Colorscheme (Neovim-native port of morhetz/gruvbox), `contrast = "hard"` for night work, `<leader>ud/ul/ut` to switch dark/light |
 
 ---
 

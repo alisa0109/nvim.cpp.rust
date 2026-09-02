@@ -2,62 +2,40 @@
 -- lean: function over decoration (TS §23).
 return {
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    -- ellisonleao/gruvbox.nvim is the maintained Neovim-native port of
+    -- morhetz/gruvbox — same palette/feel, but with proper treesitter/LSP
+    -- semantic-highlight groups that the original vimscript plugin doesn't
+    -- define (needed for consistent colors across blink.cmp, dap-ui, etc.).
+    "ellisonleao/gruvbox.nvim",
+    name = "gruvbox",
     priority = 1000,
+    lazy = false, -- must load at startup; having `keys` below would
+    -- otherwise make lazy.nvim treat this as lazy-loaded and the
+    -- colorscheme would only apply after the first <leader>u* keypress
     opts = {
-      flavour = "mocha",
-      -- Darker/higher-contrast than stock Mocha for comfortable night work:
-      -- push the background tiers toward near-black instead of Mocha's
-      -- default dark-navy (#1e1e2e), while keeping foreground/accent colors
-      -- untouched so syntax highlighting contrast stays the same.
-      background = { light = "latte", dark = "mocha" },
-      color_overrides = {
-        mocha = {
-          base = "#0a0a10",
-          mantle = "#060609",
-          crust = "#020203",
-        },
-      },
-      dim_inactive = { enabled = true, shade = "dark", percentage = 0.15 },
-      integrations = {
-        blink_cmp = true,
-        gitsigns = true,
-        neotree = true,
-        telescope = true,
-        which_key = true,
-        native_lsp = { enabled = true },
-        dap = true,
-        dap_ui = true,
-        treesitter = true,
-        mason = true,
-        cmp = false,
-        indent_blankline = { enabled = false },
-      },
+      terminal_colors = true,
+      contrast = "hard", -- darkest variant — good contrast for night work
+      dim_inactive = true,
+      italic = { strings = false, comments = true, folds = true },
     },
-    -- Quick day/night theme switching: Catppuccin ships four flavours
-    -- (latte = light, frappe/macchiato/mocha = dark) and registers each as
-    -- its own colorscheme, so switching is instant — no reload needed.
+    -- Day/night switching: gruvbox is one colorscheme with light/dark
+    -- controlled by vim.o.background, unlike Catppuccin's per-flavour names.
     keys = {
-      { "<leader>ud", function() vim.o.background = "dark"; vim.cmd.colorscheme("catppuccin-mocha") end, desc = "Night theme (dark)" },
-      { "<leader>ul", function() vim.o.background = "light"; vim.cmd.colorscheme("catppuccin-latte") end, desc = "Day theme (light)" },
+      { "<leader>ud", function() vim.o.background = "dark"; vim.cmd.colorscheme("gruvbox") end, desc = "Night theme (dark)" },
+      { "<leader>ul", function() vim.o.background = "light"; vim.cmd.colorscheme("gruvbox") end, desc = "Day theme (light)" },
       {
         "<leader>ut",
         function()
-          if (vim.g.colors_name or ""):find("latte") then
-            vim.o.background = "dark"
-            vim.cmd.colorscheme("catppuccin-mocha")
-          else
-            vim.o.background = "light"
-            vim.cmd.colorscheme("catppuccin-latte")
-          end
+          vim.o.background = (vim.o.background == "dark") and "light" or "dark"
+          vim.cmd.colorscheme("gruvbox")
         end,
         desc = "Toggle day/night theme",
       },
     },
     config = function(_, opts)
-      require("catppuccin").setup(opts)
-      vim.cmd.colorscheme("catppuccin")
+      require("gruvbox").setup(opts)
+      vim.o.background = "dark"
+      vim.cmd.colorscheme("gruvbox")
     end,
   },
 
@@ -67,7 +45,7 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       options = {
-        theme = "catppuccin",
+        theme = "gruvbox",
         globalstatus = true,
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
