@@ -7,6 +7,19 @@ return {
     priority = 1000,
     opts = {
       flavour = "mocha",
+      -- Darker/higher-contrast than stock Mocha for comfortable night work:
+      -- push the background tiers toward near-black instead of Mocha's
+      -- default dark-navy (#1e1e2e), while keeping foreground/accent colors
+      -- untouched so syntax highlighting contrast stays the same.
+      background = { light = "latte", dark = "mocha" },
+      color_overrides = {
+        mocha = {
+          base = "#0a0a10",
+          mantle = "#060609",
+          crust = "#020203",
+        },
+      },
+      dim_inactive = { enabled = true, shade = "dark", percentage = 0.15 },
       integrations = {
         blink_cmp = true,
         gitsigns = true,
