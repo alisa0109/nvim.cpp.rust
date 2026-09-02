@@ -35,6 +35,26 @@ return {
         indent_blankline = { enabled = false },
       },
     },
+    -- Quick day/night theme switching: Catppuccin ships four flavours
+    -- (latte = light, frappe/macchiato/mocha = dark) and registers each as
+    -- its own colorscheme, so switching is instant — no reload needed.
+    keys = {
+      { "<leader>ud", function() vim.o.background = "dark"; vim.cmd.colorscheme("catppuccin-mocha") end, desc = "Night theme (dark)" },
+      { "<leader>ul", function() vim.o.background = "light"; vim.cmd.colorscheme("catppuccin-latte") end, desc = "Day theme (light)" },
+      {
+        "<leader>ut",
+        function()
+          if (vim.g.colors_name or ""):find("latte") then
+            vim.o.background = "dark"
+            vim.cmd.colorscheme("catppuccin-mocha")
+          else
+            vim.o.background = "light"
+            vim.cmd.colorscheme("catppuccin-latte")
+          end
+        end,
+        desc = "Toggle day/night theme",
+      },
+    },
     config = function(_, opts)
       require("catppuccin").setup(opts)
       vim.cmd.colorscheme("catppuccin")
@@ -94,6 +114,7 @@ return {
         { "<leader>r", group = "Rust / Cargo" },
         { "<leader>d", group = "Diagnostics / Debug" },
         { "<leader>t", group = "Test" },
+        { "<leader>u", group = "UI / Theme" },
       },
     },
   },
